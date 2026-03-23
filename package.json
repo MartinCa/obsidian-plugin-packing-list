@@ -1,21 +1,24 @@
 {
-	"name": "packing-list",
-	"version": "1.0.0",
-	"description": "Obsidian plugin for managing packing lists — reset checkboxes, track items, and create new lists from templates.",
-	"main": "main.js",
-	"scripts": {
-		"dev": "node esbuild.config.mjs",
-		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "MIT",
-	"devDependencies": {
-		"@types/node": "^25.5.0",
-		"builtin-modules": "^5.0.0",
-		"esbuild": "^0.27.4",
-		"obsidian": "latest",
-		"tslib": "^2.8.1",
-		"typescript": "^5.9.3"
-	}
+  "name": "packing-list",
+  "version": "1.0.0",
+  "description": "Obsidian plugin for managing packing lists — reset checkboxes, track items, and create new lists from templates.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "builtin-modules": "^5.0.0",
+    "esbuild": "^0.27.4",
+    "obsidian": "latest",
+    "prettier": "^3.8.1",
+    "tslib": "^2.8.1",
+    "typescript": "^5.9.3"
+  }
 }

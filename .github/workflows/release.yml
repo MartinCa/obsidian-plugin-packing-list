@@ -26,11 +26,9 @@ jobs:
       - name: Build
         run: node esbuild.config.mjs production
 
-      - name: Upload release assets
+      - name: Package and upload release assets
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release upload "${{ github.event.release.tag_name }}" \
-            main.js \
-            manifest.json \
-            styles.css
+          zip packing-list.zip main.js manifest.json styles.css
+          gh release upload "${{ github.event.release.tag_name }}" packing-list.zip

@@ -1,6 +1,6 @@
 # Packing List — Obsidian Plugin
 
-Manage packing lists in Obsidian. Create new lists from existing ones with all checkboxes reset to unchecked, status annotations like *(wearing)* and ~~excluded~~ removed, and mandatory markers preserved.
+Manage packing lists in Obsidian. Create new lists from existing ones with all checkboxes reset to unchecked, status annotations like _(wearing)_ and ~~excluded~~ removed, and mandatory markers preserved.
 
 Designed to work with packing lists in this format:
 
@@ -12,7 +12,7 @@ Designed to work with packing lists in this format:
 ## Running Gear
 
 - [x] Running vest ADV Skin 12 — **mandatory**
-- [x] Wallet *(wearing)*
+- [x] Wallet _(wearing)_
 - [-] Sunglasses ~~excluded~~
 - [ ] Poles
 ```
