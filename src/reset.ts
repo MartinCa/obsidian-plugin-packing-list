@@ -35,15 +35,74 @@ export function resetLine(line: string): string {
 	return result;
 }
 
-/** Build a fresh summary line by counting checkbox lines. */
-function buildSummary(lines: string[]): string {
+/** Toggle packed (checked) status on a checkbox line. Returns null if not a checkbox line. */
+export function togglePacked(line: string): string | null {
+	if (!RE_CHECKBOX.test(line)) return null;
+
+	if (/^(\s*)- \[x\] /i.test(line) && !RE_WEARING.test(line)) {
+		// Checked but not wearing — uncheck to pending
+		return line.replace(/^(\s*)- \[.\] /, "$1- [ ] ");
+	}
+
+	// Uncheck, excluded, or wearing — strip annotations and check
+	let result = line.replace(RE_WEARING, "");
+	result = result.replace(RE_EXCLUDED, "");
+	result = result.replace(/^(\s*)- \[.\] /, "$1- [x] ");
+	return result;
+}
+
+/** Toggle *(wearing)* on a checkbox line. Returns null if not a checkbox line. */
+export function toggleWearing(line: string): string | null {
+	if (!RE_CHECKBOX.test(line)) return null;
+
+	if (RE_WEARING.test(line)) {
+		// Remove wearing — uncheck back to pending
+		let result = line.replace(RE_WEARING, "");
+		result = result.replace(/^(\s*)- \[.\] /, "$1- [ ] ");
+		return result;
+	}
+
+	// Add wearing — check the box, strip excluded if present
+	let result = line.replace(RE_EXCLUDED, "");
+	result = result.replace(/^(\s*)- \[.\] /, "$1- [x] ");
+	return result + " *(wearing)*";
+}
+
+/** Toggle ~~excluded~~ on a checkbox line. Returns null if not a checkbox line. */
+export function toggleExcluded(line: string): string | null {
+	if (!RE_CHECKBOX.test(line)) return null;
+
+	if (RE_EXCLUDED.test(line)) {
+		// Remove excluded — uncheck back to pending
+		let result = line.replace(RE_EXCLUDED, "");
+		result = result.replace(/^(\s*)- \[.\] /, "$1- [ ] ");
+		return result;
+	}
+
+	// Add excluded — mark with [-], strip wearing if present
+	let result = line.replace(RE_WEARING, "");
+	result = result.replace(/^(\s*)- \[.\] /, "$1- [-] ");
+	return result + " ~~excluded~~";
+}
+
+/** Count items by status and build a summary line. */
+export function buildSummary(lines: string[]): string {
+	let packed = 0;
+	let excluded = 0;
 	let total = 0;
+
 	for (const line of lines) {
-		if (RE_CHECKBOX.test(line)) {
-			total++;
+		if (!RE_CHECKBOX.test(line)) continue;
+		total++;
+		if (RE_EXCLUDED.test(line)) {
+			excluded++;
+		} else if (/^(\s*)- \[x\] /i.test(line)) {
+			packed++;
 		}
 	}
-	return `> **0** packed · **0** excluded · **${total}** pending · **${total}** total`;
+
+	const pending = total - packed - excluded;
+	return `> **${packed}** packed · **${excluded}** excluded · **${pending}** pending · **${total}** total`;
 }
 
 // ── Document-level reset ────────────────────────────────────────────

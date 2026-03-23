@@ -1,5 +1,5 @@
-import { Notice, Plugin, TFile } from "obsidian";
-import { resetContent, suggestName } from "./reset";
+import { Editor, Notice, Plugin, TFile } from "obsidian";
+import { buildSummary, resetContent, suggestName, toggleExcluded, togglePacked, toggleWearing } from "./reset";
 import { NewNameModal } from "./modal";
 
 export default class PackingListPlugin extends Plugin {
@@ -15,6 +15,36 @@ export default class PackingListPlugin extends Plugin {
 			},
 		});
 
+		this.addCommand({
+			id: "toggle-packed",
+			name: "Toggle packed status",
+			icon: "check-square",
+			editorCallback: (editor: Editor) => {
+				this.toggleLineStatus(editor, togglePacked);
+			},
+			hotkeys: [{ modifiers: ["Mod", "Shift"], key: "x" }],
+		});
+
+		this.addCommand({
+			id: "toggle-wearing",
+			name: "Toggle wearing status",
+			icon: "shirt",
+			editorCallback: (editor: Editor) => {
+				this.toggleLineStatus(editor, toggleWearing);
+			},
+			hotkeys: [{ modifiers: ["Mod", "Shift"], key: "w" }],
+		});
+
+		this.addCommand({
+			id: "toggle-excluded",
+			name: "Toggle excluded status",
+			icon: "x-circle",
+			editorCallback: (editor: Editor) => {
+				this.toggleLineStatus(editor, toggleExcluded);
+			},
+			hotkeys: [{ modifiers: ["Mod", "Shift"], key: "e" }],
+		});
+
 		this.registerEvent(
 			this.app.workspace.on("file-menu", (menu, file) => {
 				if (!(file instanceof TFile) || file.extension !== "md") return;
@@ -25,6 +55,41 @@ export default class PackingListPlugin extends Plugin {
 				});
 			})
 		);
+	}
+
+	private toggleLineStatus(
+		editor: Editor,
+		toggleFn: (line: string) => string | null,
+	): void {
+		const cursor = editor.getCursor();
+		const line = editor.getLine(cursor.line);
+		const toggled = toggleFn(line);
+
+		if (toggled === null) {
+			new Notice("Not a checkbox line");
+			return;
+		}
+
+		editor.setLine(cursor.line, toggled);
+		this.updateSummary(editor);
+	}
+
+	private updateSummary(editor: Editor): void {
+		const lineCount = editor.lineCount();
+		const lines: string[] = [];
+		for (let i = 0; i < lineCount; i++) {
+			lines.push(editor.getLine(i));
+		}
+
+		const summaryRe =
+			/^> \*\*\d+\*\* packed · \*\*\d+\*\* excluded · \*\*\d+\*\* pending · \*\*\d+\*\* total$/;
+
+		for (let i = 0; i < lineCount; i++) {
+			if (summaryRe.test(lines[i])) {
+				editor.setLine(i, buildSummary(lines));
+				break;
+			}
+		}
 	}
 
 	private async resetFromFile(file: TFile): Promise<void> {
