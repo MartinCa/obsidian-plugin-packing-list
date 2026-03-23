@@ -22,7 +22,6 @@ export default class PackingListPlugin extends Plugin {
       editorCallback: (editor: Editor) => {
         this.toggleLineStatus(editor, togglePacked);
       },
-      hotkeys: [{ modifiers: ["Mod", "Shift"], key: "x" }],
     });
 
     this.addCommand({
@@ -32,7 +31,6 @@ export default class PackingListPlugin extends Plugin {
       editorCallback: (editor: Editor) => {
         this.toggleLineStatus(editor, toggleWearing);
       },
-      hotkeys: [{ modifiers: ["Mod", "Shift"], key: "w" }],
     });
 
     this.addCommand({
@@ -42,7 +40,6 @@ export default class PackingListPlugin extends Plugin {
       editorCallback: (editor: Editor) => {
         this.toggleLineStatus(editor, toggleExcluded);
       },
-      hotkeys: [{ modifiers: ["Mod", "Shift"], key: "e" }],
     });
 
     this.registerEvent(
