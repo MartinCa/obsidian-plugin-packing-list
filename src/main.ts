@@ -42,6 +42,15 @@ export default class PackingListPlugin extends Plugin {
       },
     });
 
+    this.addCommand({
+      id: "add-entry",
+      name: "Add packing list entry",
+      icon: "plus-circle",
+      editorCallback: (editor: Editor) => {
+        this.addEntry(editor);
+      },
+    });
+
     this.registerEvent(
       this.app.workspace.on("file-menu", (menu, file) => {
         if (!(file instanceof TFile) || file.extension !== "md") return;
@@ -53,6 +62,25 @@ export default class PackingListPlugin extends Plugin {
         });
       }),
     );
+  }
+
+  private addEntry(editor: Editor): void {
+    const cursor = editor.getCursor();
+    const currentLine = editor.getLine(cursor.line);
+    const entry = "- [ ] ";
+
+    if (currentLine.trim() === "") {
+      // Current line is empty — insert the entry here
+      editor.setLine(cursor.line, entry);
+      editor.setCursor({ line: cursor.line, ch: entry.length });
+    } else {
+      // Current line is not empty — insert a new line below
+      const lineEnd = currentLine.length;
+      editor.replaceRange("\n" + entry, { line: cursor.line, ch: lineEnd });
+      editor.setCursor({ line: cursor.line + 1, ch: entry.length });
+    }
+
+    this.updateSummary(editor);
   }
 
   private toggleLineStatus(editor: Editor, toggleFn: (line: string) => string | null): void {
