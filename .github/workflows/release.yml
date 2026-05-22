@@ -63,10 +63,13 @@ jobs:
 
           git add versions.json
           git commit -m "chore: add ${VERSION} to versions.json"
-          git push origin "${BRANCH}"
+          git push --force origin "${BRANCH}"
 
           gh pr create \
             --title "chore: add ${VERSION} to versions.json" \
             --body "Automated PR to update \`versions.json\` after release \`${VERSION}\`." \
             --base main \
-            --head "${BRANCH}"
+            --head "${BRANCH}" \
+          || gh pr edit "${BRANCH}" \
+            --title "chore: add ${VERSION} to versions.json" \
+            --body "Automated PR to update \`versions.json\` after release \`${VERSION}\`."
