@@ -42,4 +42,4 @@ jobs:
           GITHUB_EVENT_RELEASE_TAG_NAME: ${{ github.event.release.tag_name }}
         run: |
           zip packing-list.zip main.js manifest.json styles.css
-          gh release upload "${GITHUB_EVENT_RELEASE_TAG_NAME}" main.js packing-list.zip manifest.json
+          gh release upload "${GITHUB_EVENT_RELEASE_TAG_NAME}" main.js styles.css packing-list.zip manifest.json
