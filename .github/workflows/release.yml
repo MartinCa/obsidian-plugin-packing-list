@@ -44,13 +44,12 @@ jobs:
         run: |
           gh release upload "${GITHUB_EVENT_RELEASE_TAG_NAME}" main.js styles.css manifest.json
 
-      - name: Update versions.json via PR
+      - name: Update release files via PR
         env:
           GH_TOKEN: ${{ github.token }}
           GITHUB_EVENT_RELEASE_TAG_NAME: ${{ github.event.release.tag_name }}
         run: |
           VERSION="${GITHUB_EVENT_RELEASE_TAG_NAME#v}"
-          MIN_APP_VERSION=$(jq -r '.minAppVersion' manifest.json)
           BRANCH="chore/versions-${VERSION}"
 
           git config user.name "github-actions[bot]"
@@ -59,17 +58,25 @@ jobs:
           git fetch origin main
           git checkout -b "${BRANCH}" origin/main
 
-          jq --arg v "$VERSION" --arg min "$MIN_APP_VERSION" '. + {($v): $min}' versions.json > versions.tmp && mv versions.tmp versions.json
+          MIN_APP_VERSION=$(jq -r '.minAppVersion' manifest.json)
 
-          git add versions.json
-          git commit -m "chore: add ${VERSION} to versions.json"
+          jq --arg v "$VERSION" --arg min "$MIN_APP_VERSION" '. + {($v): $min}' versions.json > versions.tmp && mv versions.tmp versions.json
+          jq --arg v "$VERSION" '.version = $v' manifest.json > manifest.tmp && mv manifest.tmp manifest.json
+          jq --arg v "$VERSION" '.version = $v' package.json > package.tmp && mv package.tmp package.json
+
+          git add versions.json manifest.json package.json
+          git commit -m "chore: release ${VERSION}"
           git push --force origin "${BRANCH}"
 
-          gh pr create \
-            --title "chore: add ${VERSION} to versions.json" \
-            --body "Automated PR to update \`versions.json\` after release \`${VERSION}\`." \
-            --base main \
-            --head "${BRANCH}" \
-          || gh pr edit "${BRANCH}" \
-            --title "chore: add ${VERSION} to versions.json" \
-            --body "Automated PR to update \`versions.json\` after release \`${VERSION}\`."
+          PR_NUMBER=$(gh pr list --head "${BRANCH}" --json number --jq '.[0].number // empty')
+          if [ -n "${PR_NUMBER}" ]; then
+            gh pr edit "${PR_NUMBER}" \
+              --title "chore: release ${VERSION}" \
+              --body "Automated PR to update \`versions.json\`, \`manifest.json\`, and \`package.json\` after release \`${VERSION}\`."
+          else
+            gh pr create \
+              --title "chore: release ${VERSION}" \
+              --body "Automated PR to update \`versions.json\`, \`manifest.json\`, and \`package.json\` after release \`${VERSION}\`." \
+              --base main \
+              --head "${BRANCH}"
+          fi

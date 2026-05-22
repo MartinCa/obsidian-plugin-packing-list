@@ -21,7 +21,10 @@ export default class PackingListPlugin extends Plugin {
       icon: "check-square",
       checkCallback: (checking: boolean) => {
         const editor = this.app.workspace.activeEditor?.editor;
-        if (!editor) return false;
+        if (!editor) {
+          if (!checking) new Notice("No active editor");
+          return false;
+        }
         if (checking) return true;
         this.toggleLineStatus(editor, togglePacked);
       },
@@ -33,7 +36,10 @@ export default class PackingListPlugin extends Plugin {
       icon: "shirt",
       checkCallback: (checking: boolean) => {
         const editor = this.app.workspace.activeEditor?.editor;
-        if (!editor) return false;
+        if (!editor) {
+          if (!checking) new Notice("No active editor");
+          return false;
+        }
         if (checking) return true;
         this.toggleLineStatus(editor, toggleWearing);
       },
@@ -45,7 +51,10 @@ export default class PackingListPlugin extends Plugin {
       icon: "x-circle",
       checkCallback: (checking: boolean) => {
         const editor = this.app.workspace.activeEditor?.editor;
-        if (!editor) return false;
+        if (!editor) {
+          if (!checking) new Notice("No active editor");
+          return false;
+        }
         if (checking) return true;
         this.toggleLineStatus(editor, toggleExcluded);
       },
@@ -57,7 +66,10 @@ export default class PackingListPlugin extends Plugin {
       icon: "plus-circle",
       checkCallback: (checking: boolean) => {
         const editor = this.app.workspace.activeEditor?.editor;
-        if (!editor) return false;
+        if (!editor) {
+          if (!checking) new Notice("No active editor");
+          return false;
+        }
         if (checking) return true;
         this.addEntry(editor);
       },
