@@ -30,7 +30,7 @@ Designed to work with packing lists in this format:
 
 ## Installation
 
-1. Download the [latest release](https://github.com/YOUR_USERNAME/packing-list/releases/latest) zip or copy the three plugin files: `main.js`, `manifest.json`, `styles.css`
+1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/martinca/obsidian-plugin-packing-list/releases/latest)
 2. In your vault, create the folder:
    ```
    YOUR_VAULT/.obsidian/plugins/packing-list/

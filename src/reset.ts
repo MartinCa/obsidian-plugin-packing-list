@@ -11,10 +11,10 @@
 const RE_CHECKBOX = /^(\s*)- \[.\] /;
 
 /** The *(wearing)* annotation added by ods2md */
-const RE_WEARING = / \*\(wearing\)\*/g;
+const RE_WEARING = / \*\(wearing\)\*/;
 
 /** The ~~excluded~~ strikethrough added by ods2md */
-const RE_EXCLUDED = / ~~excluded~~/g;
+const RE_EXCLUDED = / ~~excluded~~/;
 
 /** Summary line produced by ods2md */
 const RE_SUMMARY = /^> \*\*\d+\*\* packed · \*\*\d+\*\* excluded · \*\*\d+\*\* pending · \*\*\d+\*\* total$/;
