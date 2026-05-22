@@ -19,7 +19,10 @@ export default class PackingListPlugin extends Plugin {
       id: "toggle-packed",
       name: "Toggle packed status",
       icon: "check-square",
-      editorCallback: (editor: Editor) => {
+      checkCallback: (checking: boolean) => {
+        const editor = this.app.workspace.activeEditor?.editor;
+        if (!editor) return false;
+        if (checking) return true;
         this.toggleLineStatus(editor, togglePacked);
       },
     });
@@ -28,7 +31,10 @@ export default class PackingListPlugin extends Plugin {
       id: "toggle-wearing",
       name: "Toggle wearing status",
       icon: "shirt",
-      editorCallback: (editor: Editor) => {
+      checkCallback: (checking: boolean) => {
+        const editor = this.app.workspace.activeEditor?.editor;
+        if (!editor) return false;
+        if (checking) return true;
         this.toggleLineStatus(editor, toggleWearing);
       },
     });
@@ -37,7 +43,10 @@ export default class PackingListPlugin extends Plugin {
       id: "toggle-excluded",
       name: "Toggle excluded status",
       icon: "x-circle",
-      editorCallback: (editor: Editor) => {
+      checkCallback: (checking: boolean) => {
+        const editor = this.app.workspace.activeEditor?.editor;
+        if (!editor) return false;
+        if (checking) return true;
         this.toggleLineStatus(editor, toggleExcluded);
       },
     });
@@ -46,7 +55,10 @@ export default class PackingListPlugin extends Plugin {
       id: "add-entry",
       name: "Add packing list entry",
       icon: "plus-circle",
-      editorCallback: (editor: Editor) => {
+      checkCallback: (checking: boolean) => {
+        const editor = this.app.workspace.activeEditor?.editor;
+        if (!editor) return false;
+        if (checking) return true;
         this.addEntry(editor);
       },
     });
