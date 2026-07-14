@@ -1,13 +1,58 @@
-import { Editor, Notice, Plugin, TFile } from "obsidian";
+import { Editor, MarkdownView, Notice, Plugin, TFile } from "obsidian";
 import { buildSummary, resetContent, suggestName, toggleExcluded, togglePacked, toggleWearing } from "./reset";
 import { NewNameModal } from "./modal";
+import { Decoration, DecorationSet, EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view";
+import { RangeSetBuilder } from "@codemirror/state";
 
 const HIGHLIGHT_CLASS = "packing-list-highlight-pending";
+const PENDING_LINE_CLASS = "packing-list-pending";
+
+const pendingDecoration = Decoration.line({ class: PENDING_LINE_CLASS });
+
+function buildDecorations(view: EditorView): DecorationSet {
+  const builder = new RangeSetBuilder<Decoration>();
+  for (const { from, to } of view.visibleRanges) {
+    for (let pos = from; pos <= to; ) {
+      const line = view.state.doc.lineAt(pos);
+      if (/^\s*- \[ \] /.test(line.text)) {
+        builder.add(line.from, line.from, pendingDecoration);
+      }
+      pos = line.to + 1;
+    }
+  }
+  return builder.finish();
+}
+
+const pendingHighlightPlugin = ViewPlugin.fromClass(
+  class {
+    decorations: DecorationSet;
+    constructor(view: EditorView) {
+      this.decorations = buildDecorations(view);
+    }
+    update(update: ViewUpdate) {
+      if (update.docChanged || update.viewportChanged) {
+        this.decorations = buildDecorations(update.view);
+      }
+    }
+  },
+  { decorations: (v) => v.decorations },
+);
 
 export default class PackingListPlugin extends Plugin {
   private highlightPending = false;
 
   async onload(): Promise<void> {
+    this.registerEditorExtension(pendingHighlightPlugin);
+
+    this.registerMarkdownPostProcessor((el) => {
+      el.querySelectorAll("li").forEach((li) => {
+        const checkbox = li.querySelector('input[type="checkbox"]');
+        if (checkbox && !(checkbox as HTMLInputElement).checked) {
+          li.classList.add(PENDING_LINE_CLASS);
+        }
+      });
+    });
+
     this.addCommand({
       id: "reset-packing-list",
       name: "Create new packing list from current note",
@@ -113,11 +158,9 @@ export default class PackingListPlugin extends Plugin {
     const entry = "- [ ] ";
 
     if (currentLine.trim() === "") {
-      // Current line is empty — insert the entry here
       editor.setLine(cursor.line, entry);
       editor.setCursor({ line: cursor.line, ch: entry.length });
     } else {
-      // Current line is not empty — insert a new line below
       const lineEnd = currentLine.length;
       editor.replaceRange("\n" + entry, { line: cursor.line, ch: lineEnd });
       editor.setCursor({ line: cursor.line + 1, ch: entry.length });

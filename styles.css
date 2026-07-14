@@ -1,24 +1,10 @@
-/* Reading View */
-body.packing-list-highlight-pending li[data-task=" "] {
+body.packing-list-highlight-pending .packing-list-pending {
   background-color: var(--background-modifier-error);
   border-radius: 4px;
   padding-inline: 4px;
 }
 
-body.packing-list-highlight-pending li[data-task=" "] .task-list-item-checkbox {
-  outline: 2px solid var(--text-error);
-  outline-offset: 1px;
-  border-radius: 2px;
-}
-
-/* Live Preview / Editor */
-body.packing-list-highlight-pending .HyperMD-task-line:has(input[data-task=" "]) {
-  background-color: var(--background-modifier-error);
-  border-radius: 4px;
-  padding-inline: 4px;
-}
-
-body.packing-list-highlight-pending .HyperMD-task-line:has(input[data-task=" "]) input[type="checkbox"] {
+body.packing-list-highlight-pending .packing-list-pending input[type="checkbox"] {
   outline: 2px solid var(--text-error);
   outline-offset: 1px;
   border-radius: 2px;
