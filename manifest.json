@@ -1,7 +1,7 @@
 {
   "id": "packing-list",
   "name": "Packing List",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "minAppVersion": "0.15.0",
   "description": "Manage packing lists in Obsidian — reset checkboxes, track items, and create new lists from templates.",
   "author": "Martin Caspersen",
