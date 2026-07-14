@@ -1,6 +1,6 @@
 {
   "name": "packing-list",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Obsidian plugin for managing packing lists — reset checkboxes, track items, and create new lists from templates.",
   "main": "main.js",
   "scripts": {
