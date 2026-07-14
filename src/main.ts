@@ -2,7 +2,11 @@ import { Editor, Notice, Plugin, TFile } from "obsidian";
 import { buildSummary, resetContent, suggestName, toggleExcluded, togglePacked, toggleWearing } from "./reset";
 import { NewNameModal } from "./modal";
 
+const HIGHLIGHT_CLASS = "packing-list-highlight-pending";
+
 export default class PackingListPlugin extends Plugin {
+  private highlightPending = false;
+
   async onload(): Promise<void> {
     this.addCommand({
       id: "reset-packing-list",
@@ -75,6 +79,17 @@ export default class PackingListPlugin extends Plugin {
       },
     });
 
+    this.addCommand({
+      id: "highlight-pending",
+      name: "Toggle highlight on pending items",
+      icon: "highlighter",
+      callback: () => {
+        this.highlightPending = !this.highlightPending;
+        document.body.classList.toggle(HIGHLIGHT_CLASS, this.highlightPending);
+        new Notice(this.highlightPending ? "Pending items highlighted" : "Highlight removed");
+      },
+    });
+
     this.registerEvent(
       this.app.workspace.on("file-menu", (menu, file) => {
         if (!(file instanceof TFile) || file.extension !== "md") return;
@@ -86,6 +101,10 @@ export default class PackingListPlugin extends Plugin {
         });
       }),
     );
+  }
+
+  onunload(): void {
+    document.body.classList.remove(HIGHLIGHT_CLASS);
   }
 
   private addEntry(editor: Editor): void {

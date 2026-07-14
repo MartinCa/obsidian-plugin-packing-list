@@ -1,1 +1,11 @@
-/* Reset Packing List — no custom styles needed */
+body.packing-list-highlight-pending li[data-task=" "] {
+  background-color: var(--background-modifier-error);
+  border-radius: 4px;
+  padding-inline: 4px;
+}
+
+body.packing-list-highlight-pending li[data-task=" "] .task-list-item-checkbox {
+  outline: 2px solid var(--text-error);
+  outline-offset: 1px;
+  border-radius: 2px;
+}
