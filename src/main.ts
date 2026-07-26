@@ -12,7 +12,7 @@ const pendingDecoration = Decoration.line({ class: PENDING_LINE_CLASS });
 function buildDecorations(view: EditorView): DecorationSet {
   const builder = new RangeSetBuilder<Decoration>();
   for (const { from, to } of view.visibleRanges) {
-    for (let pos = from; pos <= to; ) {
+    for (let pos = from; pos <= to;) {
       const line = view.state.doc.lineAt(pos);
       if (/^\s*- \[ \] /.test(line.text)) {
         builder.add(line.from, line.from, pendingDecoration);
