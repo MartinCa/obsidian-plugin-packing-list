@@ -1,0 +1,7 @@
+pre-commit:
+  commands:
+    lint:
+      skip: true
+    format:
+      run: npx --no-install prettier --write {staged_files}
+      glob: "*.{ts,tsx,json,css,md,js,mjs,html}"
