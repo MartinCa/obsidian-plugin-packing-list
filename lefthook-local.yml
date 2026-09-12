@@ -1,6 +1,7 @@
 pre-commit:
   commands:
     lint:
+      # Skipped because this repo has no ESLint setup — remove this override if ESLint is added, else hooks silently skip lint forever.
       skip: true
     format:
       run: npx --no-install prettier --write {staged_files}
