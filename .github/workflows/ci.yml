@@ -84,4 +84,3 @@ jobs:
         with:
           sarif_file: zizmor.sarif
           category: zizmor
-
