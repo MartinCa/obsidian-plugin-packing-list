@@ -1,16 +1,24 @@
-name: Release
+name: Publish
 
 on:
   release:
     types: [published]
 
-permissions:
-  contents: write
-  pull-requests: write
+permissions: {}
+
+concurrency:
+  group: publish-${{ github.ref }}
+  # Never cancel a publish midway: a half-pushed asset set is worse than
+  # waiting for the previous run to finish.
+  cancel-in-progress: false
 
 jobs:
-  build:
+  publish_assets:
+    name: Build & upload release assets
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -19,7 +27,7 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 24
-          cache: npm
+          package-manager-cache: false
 
       - run: npm ci
 
