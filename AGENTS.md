@@ -6,7 +6,7 @@ Guidance for AI coding agents (and humans) working in this repository.
 
 Local hooks are installed automatically by `npm install` (the `prepare` script runs `lefthook install` — idempotent, safe to re-run).
 
-Hooks come from the shared `MartinCa/lefthook-configs` fragments pinned at `v1.0.1` in `lefthook.yml`. `remotes:` configs merge _over_ `lefthook.yml`, so this repo's npm adaptation lives in `lefthook-local.yml` (the one layer that overrides remotes): it swaps the shared `pnpm prettier` invocation for `npx --no-install` and skips the fragment's `lint` command — this repo has no ESLint setup (no `eslint` dependency, no `eslint.config.js`), Prettier only. The format glob is extended to TS/TSX so the staged autofix covers the same file set as `npm run format:check`.
+Hooks come from the shared `MartinCa/lefthook-configs` fragments pinned at `v2.0.0` in `lefthook.yml`. `remotes:` configs merge _over_ `lefthook.yml`, so this repo's npm adaptation lives in `lefthook-local.yml` (the one layer that overrides remotes): it swaps the shared `format-ts` `pnpm prettier` invocation for `npx --no-install` and skips the fragment's `lint-ts` command — this repo has no ESLint setup (no `eslint` dependency, no `eslint.config.js`), Prettier only. The `format-ts` glob is extended to TS/TSX so the staged autofix covers the same file set as `npm run format:check`.
 
 - **pre-commit** — Prettier `--write` on staged TS/TSX/JS/JSON/CSS/MD, re-staging fixed files; `lefthook-shared.yml` secret-scans the staged diff with `betterleaks` (blocks the commit on a leak) and audits staged `.github/workflows/*` files with `zizmor` (blocks on a finding).
 - **commit-msg** — `commit-msg.yml` enforces Conventional Commits, e.g. `feat: ...`, `fix(api): ...`.
