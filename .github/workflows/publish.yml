@@ -24,12 +24,15 @@ jobs:
         with:
           persist-credentials: false
 
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 24
+          # Intentionally no cache — matching previous npm behavior.
           package-manager-cache: false
 
-      - run: npm ci
+      - run: pnpm install --frozen-lockfile
 
       - name: Stamp version from release tag
         env:
@@ -40,7 +43,7 @@ jobs:
           jq --arg v "$VERSION" '.version = $v' package.json > package.tmp && mv package.tmp package.json
 
       - name: Type check
-        run: npx tsc --noEmit --skipLibCheck
+        run: pnpm exec tsc --noEmit --skipLibCheck
 
       - name: Build
         run: node esbuild.config.mjs production
