@@ -1,7 +1,7 @@
 # Build output
 main.js
 
-# npm
+# pnpm
 node_modules/
 
 # IDE
@@ -13,6 +13,3 @@ node_modules/
 # OS
 .DS_Store
 Thumbs.db
-
-# pnpm (documented npm repo; keep the lockfile from ever appearing)
-pnpm-lock.yaml
