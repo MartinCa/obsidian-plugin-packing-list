@@ -167,11 +167,11 @@ importers:
   .:
     devDependencies:
       '@codemirror/state':
-        specifier: 6.7.4
-        version: 6.7.4
+        specifier: 6.7.5
+        version: 6.7.5
       '@codemirror/view':
-        specifier: 6.43.11
-        version: 6.43.11
+        specifier: 6.43.12
+        version: 6.43.12
       '@types/node':
         specifier: 25.9.6
         version: 25.9.6
@@ -186,7 +186,7 @@ importers:
         version: 2.1.14
       obsidian:
         specifier: latest
-        version: 1.13.1(@codemirror/state@6.7.4)(@codemirror/view@6.43.11)
+        version: 1.13.1(@codemirror/state@6.7.5)(@codemirror/view@6.43.12)
       prettier:
         specifier: 3.9.6
         version: 3.9.6
@@ -202,8 +202,11 @@ packages:
   '@codemirror/state@6.7.4':
     resolution: {integrity: sha512-QhQIVRY+xHZDxwOSFrJ1eUMapJBUID3IdeAjf7dHO7zBUzSkyooHiodnalz5MG3iHzwixKMlAAyn7244y537EA==}
 
-  '@codemirror/view@6.43.11':
-    resolution: {integrity: sha512-2+esucbQX6wB2JYi1eDvdCPFTA31BN8oSy6xCmk3G6CloV11yOvEjYk+gH7kLrP0MuHG94E8WDhjs5oMiu3+Wg==}
+  '@codemirror/state@6.7.5':
+    resolution: {integrity: sha512-QjLbZmY1Au3JiRrDVYFLRD0BZ3SOKS9pR3yjIkd7u27YY8TFD9/Q9fhPnLV5l1mHFSo3hHU/N31vpwEJOx4owQ==}
+
+  '@codemirror/view@6.43.12':
+    resolution: {integrity: sha512-Nv0vxQ19NAqvB/c2pFzjIzFlzzJl7jmdtNkwOwGbn0Ks9mFAzibvumz7cQem5cRsFA2cEw2fg+uHZGbcHupLQQ==}
 
   '@esbuild/aix-ppc64@0.28.2':
     resolution: {integrity: sha512-XExcO+dvLKvVtNTibSTBej1NCAbaGhWn9Ww1ZPx80qsahhPFe/8jgWP0IchNe0F3HwkU7n8ejhH8bjonqht8mQ==}
@@ -599,7 +602,11 @@ snapshots:
     dependencies:
       '@marijn/find-cluster-break': 1.0.4
 
-  '@codemirror/view@6.43.11':
+  '@codemirror/state@6.7.5':
+    dependencies:
+      '@marijn/find-cluster-break': 1.0.4
+
+  '@codemirror/view@6.43.12':
     dependencies:
       '@codemirror/state': 6.7.4
       crelt: 1.0.7
@@ -838,10 +845,10 @@ snapshots:
 
   moment@2.29.4: {}
 
-  obsidian@1.13.1(@codemirror/state@6.7.4)(@codemirror/view@6.43.11):
+  obsidian@1.13.1(@codemirror/state@6.7.5)(@codemirror/view@6.43.12):
     dependencies:
-      '@codemirror/state': 6.7.4
-      '@codemirror/view': 6.43.11
+      '@codemirror/state': 6.7.5
+      '@codemirror/view': 6.43.12
       '@types/codemirror': 5.60.8
       moment: 2.29.4
 
