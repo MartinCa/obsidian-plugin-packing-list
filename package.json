@@ -17,7 +17,7 @@
   "devDependencies": {
     "@codemirror/state": "6.7.5",
     "@codemirror/view": "6.43.12",
-    "@types/node": "25.9.6",
+    "@types/node": "25.9.7",
     "builtin-modules": "5.3.0",
     "esbuild": "0.28.2",
     "lefthook": "2.1.14",
