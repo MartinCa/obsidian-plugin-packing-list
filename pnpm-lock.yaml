@@ -170,8 +170,8 @@ importers:
         specifier: 6.7.6
         version: 6.7.6
       '@codemirror/view':
-        specifier: 6.43.13
-        version: 6.43.13
+        specifier: 6.43.14
+        version: 6.43.14
       '@types/node':
         specifier: 25.9.9
         version: 25.9.9
@@ -186,7 +186,7 @@ importers:
         version: 2.1.17
       obsidian:
         specifier: latest
-        version: 1.13.1(@codemirror/state@6.7.6)(@codemirror/view@6.43.13)
+        version: 1.14.4(@codemirror/state@6.7.6)(@codemirror/view@6.43.14)
       prettier:
         specifier: 3.9.9
         version: 3.9.9
@@ -202,8 +202,8 @@ packages:
   '@codemirror/state@6.7.6':
     resolution: {integrity: sha512-kAz+AncRtKuIknedxT1bq4XwXv4UowhbkHU1myPrtVb/jZtImWuV5BXzv5vK6i3kYACsdiZiQKFQQ5Mq7elW8w==}
 
-  '@codemirror/view@6.43.13':
-    resolution: {integrity: sha512-sihaFrUzAsYBQsL9J2t69y8nfMQGwcYmggAZsk+kjPbjYZMyuf2hU8tUNTZ+P+isb6XRr8JE22TZlJxBoVdH1A==}
+  '@codemirror/view@6.43.14':
+    resolution: {integrity: sha512-hC45YnmJNR1rz42OF57BLoQNFMV12/13drnvibDsR2quNDmldcb4WvYVV81hFQg56i9lcqQMEDqilhX2QDcGQQ==}
 
   '@esbuild/aix-ppc64@0.28.2':
     resolution: {integrity: sha512-XExcO+dvLKvVtNTibSTBej1NCAbaGhWn9Ww1ZPx80qsahhPFe/8jgWP0IchNe0F3HwkU7n8ejhH8bjonqht8mQ==}
@@ -562,14 +562,14 @@ packages:
     resolution: {integrity: sha512-UWpD0VvZNIA2eA/+x4DvFlIT7uxH7aPrPrShE6nsIrX5qHJXxgDkoslAzF73X/YL2o0/9zDw3aOfpr98XchKFw==}
     hasBin: true
 
-  moment@2.29.4:
-    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
+  moment@2.31.0:
+    resolution: {integrity: sha512-0acOTfMiWOheYS4eoWb80yYMb/JLvVv9SHbs2PehaDzfUG0Bw855SKyk0IKTnPGa5+U2bmi3W68l1+sGLX/pvw==}
 
-  obsidian@1.13.1:
-    resolution: {integrity: sha512-qtTEA2pmhJzhuhJqzbBFRYhpIOqvW+krDYjtFynv66KbxBbumHBlsJfWw3I4jtnK/6fZwbQhCrmmDdRwXmX56w==}
+  obsidian@1.14.4:
+    resolution: {integrity: sha512-Kyo+5t0wFW2On5irLOPrgtwWDnaJsvE9n/P1OVvdPytx+NqeHJXvxVqADNOqLp9bU1+I64B6i+dHb0fxR/ss3w==}
     peerDependencies:
-      '@codemirror/state': 6.5.0
-      '@codemirror/view': 6.38.6
+      '@codemirror/state': 6.7.6
+      '@codemirror/view': 6.43.13
 
   prettier@3.9.9:
     resolution: {integrity: sha512-Z/CJHIkdujO/OtN7nXUii0Rf3VT5SRuhjBA82Xvu2XhBUgX3nhP67T0LHceBdQLex7OOFGTox+Q5Yg8Jk2Qivg==}
@@ -599,7 +599,7 @@ snapshots:
     dependencies:
       '@marijn/find-cluster-break': 1.0.4
 
-  '@codemirror/view@6.43.13':
+  '@codemirror/view@6.43.14':
     dependencies:
       '@codemirror/state': 6.7.6
       crelt: 1.0.7
@@ -836,14 +836,14 @@ snapshots:
       lefthook-windows-arm64: 2.1.17
       lefthook-windows-x64: 2.1.17
 
-  moment@2.29.4: {}
+  moment@2.31.0: {}
 
-  obsidian@1.13.1(@codemirror/state@6.7.6)(@codemirror/view@6.43.13):
+  obsidian@1.14.4(@codemirror/state@6.7.6)(@codemirror/view@6.43.14):
     dependencies:
       '@codemirror/state': 6.7.6
-      '@codemirror/view': 6.43.13
+      '@codemirror/view': 6.43.14
       '@types/codemirror': 5.60.8
-      moment: 2.29.4
+      moment: 2.31.0
 
   prettier@3.9.9: {}
 
